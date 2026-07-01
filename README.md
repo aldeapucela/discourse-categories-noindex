@@ -1,24 +1,22 @@
-# categories-noindex
+# discourse-categories-noindex
 
-Plugin de [Discourse](https://www.discourse.org/) que añade la etiqueta
-`<meta name="robots" content="noindex">` en las páginas de las categorías que
-elijas desde la administración, para mantenerlas fuera de los buscadores.
+A [Discourse](https://www.discourse.org/) plugin that adds a
+`<meta name="robots" content="noindex">` tag to the pages of the categories you
+select from the admin panel, keeping them out of search engines.
 
-Afecta a:
+It applies to:
 
-- Las páginas de cada **topic** de esas categorías.
-- La página de **listado** de la categoría (`/c/slug/id`).
-- Las **subcategorías** (a cualquier nivel de anidamiento) se incluyen
-  automáticamente si seleccionas la categoría padre.
+- Each **topic** page in those categories.
+- The category **listing** page (`/c/slug/id`).
+- **Subcategories** (at any nesting depth) are included automatically when you
+  select the parent category.
 
-La etiqueta se inserta en el servidor, en la vista que reciben los buscadores
-(layout *crawler*), que es la que se indexa.
+The tag is injected server-side, in the view served to crawlers (the *crawler*
+layout), which is the one that gets indexed.
 
-## Instalación
+## Installation
 
-Como es un repositorio **privado**, el `git clone` necesita autenticación
-(token o deploy key). En `/var/discourse/containers/app.yml`, dentro de
-`hooks.after_code`:
+Add the plugin to `hooks.after_code` in `/var/discourse/containers/app.yml`:
 
 ```yaml
 hooks:
@@ -27,34 +25,43 @@ hooks:
         cd: $home/plugins
         cmd:
           - git clone https://github.com/discourse/docker_manager.git
-          - git clone https://<TOKEN>@github.com/aldeapucela/discourse-categories-noindex.git
+          - git clone https://github.com/aldeapucela/discourse-categories-noindex.git
 ```
 
-Y reconstruye el contenedor:
+Then rebuild the container:
 
 ```bash
 cd /var/discourse && ./launcher rebuild app
 ```
 
-Para actualizar el plugin más adelante basta con volver a ejecutar
-`./launcher rebuild app` (hace `git pull`).
+To update the plugin later, just run `./launcher rebuild app` again (it does a
+`git pull`).
 
-## Configuración
+## Configuration
 
-En **Admin → Ajustes** (o Admin → Plugins), filtra por `categories_noindex`:
+In **Admin → Settings** (or Admin → Plugins), filter by `categories_noindex`:
 
-- **`categories_noindex_enabled`** — interruptor maestro. Activado por defecto;
-  el plugin no hace nada hasta que seleccionas categorías.
-- **`categories_noindex_category_ids`** — selector de las categorías cuyos
-  contenidos llevarán `noindex`.
+- **`categories_noindex_enabled`** — master switch. Enabled by default; the
+  plugin does nothing until you select categories.
+- **`categories_noindex_category_ids`** — the categories whose content will get
+  the `noindex` tag.
 
-No hace falta reconstruir al cambiar ajustes; solo al instalar o actualizar código.
+No rebuild is needed when changing settings; only when installing or updating
+the code.
 
-## Comprobación
+## How it works
+
+A server-side HTML builder (`server:before-head-close-crawler` and
+`server:before-head-close`) resolves the current page's category — for topics
+via `@topic_view.topic.category`, for listing pages via `@category` — walks up
+the parent chain so subcategories are honored, and emits the `noindex` meta tag
+when the category (or an ancestor) is in the selected list.
+
+## Verification
 
 ```bash
-curl -s -A "Googlebot" https://tu-foro/t/<slug>/<id> | grep -i robots
+curl -s -A "Googlebot" https://your-forum/t/<slug>/<id> | grep -i robots
 ```
 
-Debe aparecer `<meta name="robots" content="noindex">` en los topics y páginas
-de las categorías seleccionadas, y no aparecer en el resto.
+The `<meta name="robots" content="noindex">` tag should appear on topics and
+listing pages of the selected categories, and be absent everywhere else.

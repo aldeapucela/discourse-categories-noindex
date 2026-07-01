@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# name: categories-noindex
+# name: discourse-categories-noindex
 # about: Añade <meta robots noindex> a los topics y páginas de las categorías seleccionadas
 # version: 0.1
 # authors: Aldea Pucela

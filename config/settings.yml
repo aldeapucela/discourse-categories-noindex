@@ -1,0 +1,6 @@
+categories_noindex:
+  categories_noindex_enabled:
+    default: true
+  categories_noindex_category_ids:
+    type: category_list
+    default: ""

@@ -1,0 +1,4 @@
+es:
+  site_settings:
+    categories_noindex_enabled: "Añade una etiqueta meta robots noindex a los topics y páginas de listado de las categorías seleccionadas."
+    categories_noindex_category_ids: "Los topics y páginas de listado de estas categorías emiten <meta name='robots' content='noindex'>, manteniéndolos fuera de los buscadores. Las subcategorías se incluyen automáticamente."

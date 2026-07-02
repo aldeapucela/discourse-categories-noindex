@@ -55,7 +55,16 @@ A server-side HTML builder (`server:before-head-close-crawler` and
 `server:before-head-close`) resolves the current page's category — for topics
 via `@topic_view.topic.category`, for listing pages via `@category` — walks up
 the parent chain so subcategories are honored, and emits the `noindex` meta tag
-when the category (or an ancestor) is in the selected list.
+when the category (or an ancestor) is in the selected list. This is what
+crawlers receive on a direct page load.
+
+Because Discourse is a single-page app, a client-side initializer
+(`api.onPageChange`) keeps the tag in sync across in-app navigation: on every
+route change it re-evaluates the current category (mirroring the server logic,
+subcategories included) and adds or removes the tag accordingly, so the
+server-rendered tag never lingers on a page that should not carry it. The tag
+it manages is marked with `data-categories-noindex`, so it only ever touches
+its own tag and never a `robots` meta set by Discourse itself.
 
 ## Verification
 

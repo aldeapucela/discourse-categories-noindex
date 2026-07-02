@@ -25,7 +25,7 @@ after_initialize do
       category = category.parent_category
     end
 
-    category ? '<meta name="robots" content="noindex">' : ""
+    category ? '<meta name="robots" content="noindex" data-categories-noindex="1">' : ""
   end
 
   register_html_builder("server:before-head-close-crawler", &builder)

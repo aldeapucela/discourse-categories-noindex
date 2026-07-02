@@ -8,7 +8,7 @@ RSpec.describe "categories-noindex" do
   fab!(:sub_post) { Fabricate(:post, topic: Fabricate(:topic, category: sub_cat)) }
   fab!(:other_post) { Fabricate(:post, topic: Fabricate(:topic, category: other_cat)) }
 
-  let(:tag) { '<meta name="robots" content="noindex">' }
+  let(:tag) { 'content="noindex" data-categories-noindex="1"' }
 
   before do
     SiteSetting.categories_noindex_enabled = true

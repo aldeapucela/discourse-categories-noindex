@@ -5,6 +5,7 @@
 # version: 0.1
 # authors: Aldea Pucela
 # url: https://github.com/aldeapucela/discourse-categories-noindex
+# license: AGPL-3.0-or-later
 
 enabled_site_setting :categories_noindex_enabled
 

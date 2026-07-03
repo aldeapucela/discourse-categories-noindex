@@ -74,3 +74,12 @@ curl -s -A "Googlebot" https://your-forum/t/<slug>/<id> | grep -i robots
 
 The `<meta name="robots" content="noindex">` tag should appear on topics and
 listing pages of the selected categories, and be absent everywhere else.
+
+## License
+
+Copyright (C) 2026 Aldea Pucela
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version. See the [LICENSE](LICENSE) file for the full text.

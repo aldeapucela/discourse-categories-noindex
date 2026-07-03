@@ -77,7 +77,7 @@ listing pages of the selected categories, and be absent everywhere else.
 
 ## License
 
-Copyright (C) 2026 Aldea Pucela
+Copyright (C) 2026 Aldea Pucela and contributors
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU Affero General Public License as published by the Free
